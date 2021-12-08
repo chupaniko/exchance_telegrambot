@@ -26,6 +26,8 @@ public class ExchanceTelegramBot extends TelegramLongPollingBot {
     private HelpCommand helpCommand;
     private NoCommand noCommand;
 
+    private int user;
+
     private String command;
     private int fieldConstructor_;
     private boolean fieldUpdate = false;

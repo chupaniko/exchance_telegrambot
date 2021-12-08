@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Pull new changes
+git pull
+
 # Prepare Jar
 mvn clean
 mvn package
