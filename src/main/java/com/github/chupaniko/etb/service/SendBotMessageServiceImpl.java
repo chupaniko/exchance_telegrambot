@@ -21,7 +21,7 @@ public class SendBotMessageServiceImpl implements SendBotMessageService {
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(chatId);
         sendMessage.enableHtml(true);
-        sendMessage.setText(message);
+        sendMessage.setText(message + "test");
 
         try {
             exchanceTelegramBot.execute(sendMessage);
