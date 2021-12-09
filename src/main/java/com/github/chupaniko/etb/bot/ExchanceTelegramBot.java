@@ -2,16 +2,21 @@ package com.github.chupaniko.etb.bot;
 
 import com.github.chupaniko.etb.command.*;
 import com.github.chupaniko.etb.service.SendBotMessageServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import java.util.Arrays;
+import java.util.Random;
 import java.util.regex.Pattern;
 
 @Component
+@Async
 public class ExchanceTelegramBot extends TelegramLongPollingBot {
 
     public static String COMMAND_PREFIX = "/";
@@ -26,7 +31,7 @@ public class ExchanceTelegramBot extends TelegramLongPollingBot {
     private HelpCommand helpCommand;
     private NoCommand noCommand;
 
-    private int user;
+    public int user;
 
     private String command;
     private int fieldConstructor_;
@@ -39,12 +44,14 @@ public class ExchanceTelegramBot extends TelegramLongPollingBot {
     private String token;
 
     //private final CommandContainer commandContainer;
-    private final SendBotMessageServiceImpl sendBotMessageService;
+    private SendBotMessageServiceImpl sendBotMessageService;
 
     public ExchanceTelegramBot() {
         //this.commandContainer = new CommandContainer(new SendBotMessageServiceImpl(this));
+        Random random = new Random();
+        user = random.nextInt();
         this.sendBotMessageService = new SendBotMessageServiceImpl(this);
-    }
+     }
 
     @Override
     public String getBotUsername() {
@@ -83,6 +90,9 @@ public class ExchanceTelegramBot extends TelegramLongPollingBot {
                         break;
                     case "/start":
                         commandId[3] = true;
+                        Random random = new Random();
+                        user = random.nextInt();
+                        this.sendBotMessageService = new SendBotMessageServiceImpl(this);
                         startCommand = new StartCommand(sendBotMessageService);
                         startCommand.execute(update, 0, "");
                         break;
